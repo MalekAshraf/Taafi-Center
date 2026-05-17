@@ -1,0 +1,13 @@
+html {
+  direction: rtl;
+}
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Cairo", sans-serif;
+  scroll-behavior: smooth;
+}
