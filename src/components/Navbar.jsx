@@ -54,10 +54,10 @@ const Navbar = () => {
         {/* زر حجز المواعيد السريع بالرقم المحدث */}
         <div className="hidden md:block">
           <a
-            href="tel:0106042327"
+            href="tel:01060423027"
             className="bg-teal-600 text-white font-bold px-6 py-2.5 rounded-xl hover:bg-teal-700 hover:shadow-lg hover:shadow-teal-100 transition-all duration-200"
           >
-            احجز الآن: 0106042327
+            احجز الآن: 01060423027
           </a>
         </div>
 
