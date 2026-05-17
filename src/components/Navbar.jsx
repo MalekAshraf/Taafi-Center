@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X, Phone } from "lucide-react"; // استخدام أيقونات شيك ومتناسقة مع المشروع
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  // كود موحد لإغلاق قائمة الموبايل والرجوع لأول الصفحة
+  // كود موحد لإغلاق قائمة الموبايل والرجوع لأول الصفحة أو القسم المحدد بنعومة
   const handleNavClick = () => {
     setIsOpen(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -15,14 +17,14 @@ const Navbar = () => {
       className="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-100"
       dir="rtl"
     >
-      <div className="container mx-auto px-6 h-20 flex justify-between items-center">
+      <div className="container mx-auto px-4 md:px-6 h-16 md:h-20 flex justify-between items-center">
         {/* الشعار (Logo) */}
         <Link
           to="/"
           onClick={handleNavClick}
           className="flex items-center gap-2 outline-none select-none"
         >
-          <span className="text-2xl font-extrabold text-teal-600 tracking-wide cursor-pointer">
+          <span className="text-xl md:text-2xl font-extrabold text-teal-600 tracking-wide cursor-pointer">
             مـركـز تـعـافـى
           </span>
         </Link>
@@ -51,7 +53,7 @@ const Navbar = () => {
           </li>
         </ul>
 
-        {/* زر حجز المواعيد السريع بالرقم المحدث */}
+        {/* زر حجز المواعيد السريع للـ Desktop */}
         <div className="hidden md:block">
           <a
             href="tel:01060423027"
@@ -61,69 +63,65 @@ const Navbar = () => {
           </a>
         </div>
 
-        {/* زر الموبايل (Hamburger Menu Button) */}
+        {/* زر الموبايل الـ Hamburger المعزز بـ أنيميشن تفاعلي */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden p-2 text-slate-700 hover:text-teal-600 transition"
+          className="md:hidden p-2 text-slate-700 hover:text-teal-600 transition-colors duration-200 focus:outline-none"
+          aria-label="Toggle Menu"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            {isOpen ? (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18 18 6M6 6l12 12"
-              />
-            ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-              />
-            )}
-          </svg>
+          {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
-      {/* قائمة الموبايل المنسدلة (Mobile Menu) */}
-      {isOpen && (
-        <div className="md:hidden bg-white border-b border-slate-100 px-6 py-4 space-y-4 animate-fadeIn">
-          <ul className="space-y-4 font-bold text-slate-700 text-right">
-            <li className="hover:text-teal-600 cursor-pointer">
-              <Link to="/" onClick={handleNavClick}>
-                الرئيسية
-              </Link>
-            </li>
-            <li className="hover:text-teal-600 cursor-pointer">
-              <a href="/#services" onClick={() => setIsOpen(false)}>
-                خدماتنا
-              </a>
-            </li>
-            <li className="hover:text-teal-600 cursor-pointer">
-              <Link to="/about-dr" onClick={() => setIsOpen(false)}>
-                عن الدكتورة
-              </Link>
-            </li>
-            <li className="hover:text-teal-600 cursor-pointer">
-              <a href="#developer-section" onClick={() => setIsOpen(false)}>
-                مطور الموقع
-              </a>
-            </li>
-          </ul>
-          <a
-            href="tel:01060423027"
-            className="block text-center w-full bg-teal-600 text-white font-bold py-3 rounded-xl hover:bg-teal-700 transition"
+      {/* قائمة الموبايل المنسدلة باستخدام الـ AnimatePresence لمنع الفتح المفاجئ */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="md:hidden bg-white/98 backdrop-blur-md border-b border-slate-100 px-6 py-5 overflow-hidden shadow-inner"
           >
-            احجز الآن: 01060423027
-          </a>
-        </div>
-      )}
+            <ul className="space-y-4 font-bold text-slate-700 text-right mb-5">
+              <li className="hover:text-teal-600 transition-colors">
+                <Link to="/" onClick={handleNavClick}>
+                  الرئيسية
+                </Link>
+              </li>
+              <li className="hover:text-teal-600 transition-colors">
+                <a href="/#services" onClick={() => setIsOpen(false)}>
+                  خدماتنا
+                </a>
+              </li>
+              <li className="hover:text-teal-600 transition-colors">
+                <Link to="/about-dr" onClick={() => setIsOpen(false)}>
+                  عن الدكتورة
+                </Link>
+              </li>
+              <li className="hover:text-teal-600 transition-colors">
+                <a href="/#testimonail" onClick={() => setIsOpen(false)}>
+                  آراء المرضى
+                </a>
+              </li>
+              <li className="hover:text-teal-600 transition-colors">
+                <a href="#developer-section" onClick={() => setIsOpen(false)}>
+                  مطور الموقع
+                </a>
+              </li>
+            </ul>
+
+            {/* زر اتصال محسن للموبايل مع أيقونة الهاتف للمسة بصرية أسرع للمريض */}
+            <a
+              href="tel:01060423027"
+              className="flex items-center justify-center gap-2 w-full bg-teal-600 text-white font-bold py-3 rounded-xl hover:bg-teal-700 active:scale-[0.98] transition-all duration-150 shadow-md shadow-teal-600/10"
+            >
+              <Phone size={18} />
+              <span>احجز الآن: 01060423027</span>
+            </a>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };

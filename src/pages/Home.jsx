@@ -9,7 +9,6 @@ import Testimonials from "../components/Testimonials";
 import FAQ from "../components/FAQ";
 import Footer from "../components/Footer";
 import Dedication from "../components/Dedication";
-import ScrollToTop from "../components/ScrollToTop";
 
 const Home = () => {
   return (
@@ -39,10 +38,6 @@ const Home = () => {
         <FAQ />
       </section>
       <Dedication />
-      <section id="developer-section">
-        <Footer />
-      </section>
-      <ScrollToTop />
     </main>
   );
 };
