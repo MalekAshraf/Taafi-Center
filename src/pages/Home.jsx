@@ -1,6 +1,9 @@
-import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom"; // استيراد useLocation
-import Navbar from "../components/Navbar";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion"; // استيراد أنيميشن الاختفاء
+
+// استيراد اللودر الجديد والكومبوننتس
+import AppLoader from "../components/AppLoader";
 import Hero from "../components/Hero";
 import Stats from "../components/Stats";
 import Services from "../components/Services";
@@ -8,55 +11,66 @@ import WhyChooseUs from "../components/WhyChooseUs";
 import Gallery from "../components/Gallery";
 import Testimonials from "../components/Testimonials";
 import FAQ from "../components/FAQ";
-import Footer from "../components/Footer";
 import Dedication from "../components/Dedication";
 
 const Home = () => {
   const location = useLocation();
+  const [isLoading, setIsLoading] = useState(true); // حالة اللودر الافتراضية
 
   useEffect(() => {
-    // التأكد إذا كان هناك سكشن مبعوث من صفحة أخرى
-    if (location.state && location.state.scrollToId) {
-      const id = location.state.scrollToId;
+    // تشغيل الـ Timeout لإخفاء اللودر بعد ثانيتين (2000ms)
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
 
-      // عمل تأخير بسيط جداً للتأكد من أن الـ DOM تم بناءه بالكامل
+    // دالة السكرول السحرية للـ HashLink القديمة تظل تعمل كما هي بعد التحميل
+    if (!isLoading && location.state && location.state.scrollToId) {
+      const id = location.state.scrollToId;
       requestAnimationFrame(() => {
         const element = document.getElementById(id);
         if (element) {
           element.scrollIntoView({ behavior: "smooth" });
-
-          // تنظيف الـ state بعد السكرول علشان لو عمل ريفريش ميفضلش ينزل تحت
           window.history.replaceState({}, document.title);
         }
       });
     }
-  }, [location]);
+
+    return () => clearTimeout(timer); // تنظيف التايمر عند الخروج
+  }, [location, isLoading]);
 
   return (
-    <main dir="rtl" className="bg-white">
-      <section id="home">
-        <Hero />
-      </section>
-      <section id="stats">
-        <Stats yearsOfExperience={11} totalPatients={650} />
-      </section>
-      <section id="services">
-        <Services />
-      </section>
-      <section id="whychooseus">
-        <WhyChooseUs />
-      </section>
-      <section id="gallery">
-        <Gallery />
-      </section>
-      <section id="testimonail">
-        <Testimonials />
-      </section>
-      <section id="fqa">
-        <FAQ />
-      </section>
-      <Dedication />
-    </main>
+    <>
+      {/* عرض اللودر بأنيميشن اختفاء ناعم جداً */}
+      <AnimatePresence>
+        {isLoading && <AppLoader />}
+      </AnimatePresence>
+
+      {/* محتوى الصفحة الرئيسي */}
+      <main dir="rtl" className="bg-white">
+        <section id="home">
+          <Hero />
+        </section>
+        <section id="stats">
+          <Stats yearsOfExperience={11} totalPatients={650} />
+        </section>
+        <section id="services">
+          <Services />
+        </section>
+        <section id="whychooseus">
+          <WhyChooseUs />
+        </section>
+        <section id="gallery">
+          <Gallery />
+        </section>
+        <section id="testimonail">
+          <Testimonials />
+        </section>
+        <section id="fqa">
+          <FAQ />
+        </section>
+        <Dedication />
+      </main>
+    </>
   );
 };
 

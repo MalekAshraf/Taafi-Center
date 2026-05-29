@@ -1,5 +1,8 @@
+import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
+
+// استيراد المكونات والصفحات
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import AboutDr from "./pages/AboutDr";
@@ -13,14 +16,15 @@ function App() {
 
   return (
     <div className="min-h-screen font-cairo overflow-x-hidden">
-      {/* الـ Navbar ثابت في كل الصفحات خارج الـ AnimatePresence لمنع اهتزازه أثناء الانتقال */}
+      {/* الـ Navbar والـ ScrollToTop ثابتين خارج الـ AnimatePresence لمنع الاهتزاز */}
       <ScrollToTop />
       <Navbar />
 
       <AnimatePresence mode="wait">
-        {/* الـ key هنا هو المحرك الأساسي لأنيميشن الـ exit والـ enter */}
+        {/* الـ key هو المحرك الأساسي لأنيميشن الانتقال بين الصفحات */}
         <Routes location={location} key={location.pathname}>
-          {/* كل صفحة تفتح داخل الـ PageLoader الخاص بها أوتوماتيكياً */}
+          
+          {/* صفحة الـ Home (الـ AppLoader شغال جواها داخلياً زي ما تظبط في الكود السابق) */}
           <Route
             path="/"
             element={
@@ -29,6 +33,8 @@ function App() {
               </PageLoader>
             }
           />
+
+          {/* صفحة عن الدكتورة */}
           <Route
             path="/about-dr"
             element={
@@ -37,6 +43,8 @@ function App() {
               </PageLoader>
             }
           />
+
+          {/* صفحة لوحة التحكم */}
           <Route
             path="/admin-login"
             element={
@@ -45,8 +53,10 @@ function App() {
               </PageLoader>
             }
           />
+          
         </Routes>
       </AnimatePresence>
+
       <section id="developer-section">
         <Footer />
       </section>
