@@ -1,6 +1,6 @@
 import React from "react";
 import { Github, Linkedin, Mail, ExternalLink } from "lucide-react"; // تصحيح استيراد Mail بدلاً من Gmail
-import myPhoto from "../assets/images/hero-doctor.jpg"; // استيراد الصورة برمجياً لضمان قراءتها في الـ Web
+import myPhoto from "../assets/images/devImage.png"; // استيراد الصورة برمجياً لضمان قراءتها في الـ Web
 
 const Footer = () => {
   return (
@@ -69,7 +69,7 @@ const Footer = () => {
               <img
                 src={myPhoto}
                 alt="Malek Ashraf"
-                className="relative w-24 h-24 md:w-28 md:h-28 object-cover rounded-2xl border-2 border-slate-700 group-hover:border-teal-500 transition-all duration-300 shadow-xl"
+                className="relative w-24 h-24 md:w-28 md:h-28 object-cover object-top rounded-2xl border-2 border-slate-700 group-hover:border-teal-500 transition-all duration-300 shadow-xl"
               />
             </div>
           </div>

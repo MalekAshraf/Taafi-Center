@@ -10,7 +10,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import emailjs from "@emailjs/browser";
-import doctorPhoto from "../assets/images/hero-doctor.jpg"; // استيراد صورة الدكتورة لضمان عملها أونلاين
+import doctorPhoto from "../assets/images/hero-doctor.png"; // استيراد صورة الدكتورة لضمان عملها أونلاين
 import Dedication from "../components/Dedication";
 
 const AboutDr = () => {
@@ -59,19 +59,20 @@ const AboutDr = () => {
               </div>
             </div>
 
-            {/* الصورة الشخصية للدكتورة مع تأثيرات الحواف المتجاوبة */}
+            {/* الصورة الشخصية للدكتورة مع تفعيل الـ object-top لمنع قص الرأس */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
-              className="w-56 h-56 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-xl border-4 md:border-8 border-slate-100 relative md:rotate-2 group"
+              className="w-56 h-56 sm:w-64 sm:h-64 md:w-80 md:h-80 aspect-square rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-xl border-4 md:border-8 border-white relative md:rotate-2 group bg-teal-600/10"
             >
               <img
                 src={doctorPhoto}
                 alt="د. سامية"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                // تم إضافة object-top وضبط السكيل الافتراضي المتناسق
+                className="w-full h-full object-cover object-top scale-100 group-hover:scale-105 transition-transform duration-500 select-none"
               />
-              <div className="absolute bottom-3 right-3 md:bottom-4 md:right-4 bg-teal-600 text-white p-2.5 md:p-3 rounded-xl md:rounded-2xl shadow-lg">
+              <div className="absolute bottom-3 right-3 md:bottom-4 md:right-4 bg-teal-600 text-white p-2.5 md:p-3 rounded-xl md:rounded-2xl shadow-lg z-20">
                 <Award size={20} className="md:w-6 md:h-6" />
               </div>
             </motion.div>
@@ -172,7 +173,7 @@ const AboutDr = () => {
             {/* أزرار الاتصال السريع المباشر */}
             <div className="grid grid-cols-2 gap-4">
               <a
-                href="tel:+201234567890" // ضع الرقم الفعلي للعيادة هنا يا هندسة
+                href="tel:+201234567890"
                 className="bg-teal-600 text-white p-4 md:p-6 rounded-xl md:rounded-[1.5rem] flex flex-col items-center justify-center gap-1.5 hover:bg-teal-700 transition-all shadow-md active:scale-95 group text-center"
               >
                 <Phone size={22} className="group-hover:animate-bounce" />
@@ -181,7 +182,7 @@ const AboutDr = () => {
                 </span>
               </a>
               <a
-                href="mailto:info@taafi-center.com" // البريد الفعلي للمركز
+                href="mailto:info@taafi-center.com"
                 className="bg-white text-slate-800 p-4 md:p-6 rounded-xl md:rounded-[1.5rem] flex flex-col items-center justify-center gap-1.5 border border-slate-200 hover:shadow-md transition-all shadow-sm active:scale-95 text-center"
               >
                 <Mail size={22} className="text-teal-600" />
